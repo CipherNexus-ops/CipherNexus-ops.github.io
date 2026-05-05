@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Main CSS -->
+    <!-- Main CSS (stored in separate file) -->
     <link rel="stylesheet" href="style.css">
     <!-- Three.js -->
     <script type="importmap">
@@ -51,7 +51,7 @@
                     <button class="neon-btn" id="resumeBtn"><i class="fas fa-download"></i> DOWNLOAD RESUME</button>
                 </div>
                 <div class="social-links" id="socialLinks">
-                    <!-- Populated by JS -->
+                    <!-- JS will fill -->
                 </div>
             </div>
             <div style="flex:0.4; min-width: 180px; text-align:center;" class="glass-panel" style="padding:20px;">
@@ -63,22 +63,25 @@
         <section id="skills">
             <h2 class="section-title"><i class="fas fa-microchip"></i> Core Arsenal</h2>
             <div class="skills-grid" id="skillsGrid">
-                <!-- Populated by JS -->
+                <!-- JS will fill -->
             </div>
         </section>
 
         <section id="projects">
             <h2 class="section-title"><i class="fab fa-github"></i> Active Projects</h2>
             <div class="projects-grid" id="projectsGrid">
-                <!-- Populated by JS -->
+                <!-- JS will fill -->
             </div>
         </section>
 
-        <!-- WORKING INQUIRY FORM -->
+        <!-- ============================================= -->
+        <!-- WORKING INQUIRY FORM - REDIRECT METHOD (NO CORS) -->
+        <!-- ============================================= -->
         <section id="inquiry" class="form-section">
             <h2 class="section-title"><i class="fas fa-envelope"></i> Secure Inquiry</h2>
             <div class="glass-panel inquiry-form">
-                <form id="contactForm" action="https://formspree.io/f/xkoyjqwv" method="POST">
+                <!-- Direct Formspree submission - redirects to thank you page, bypasses CORS -->
+                <form action="https://formspree.io/f/xkoyjqwv" method="POST">
                     <div class="form-row">
                         <div class="form-group">
                             <label><i class="fas fa-user"></i> Full Name *</label>
@@ -121,8 +124,12 @@
                         <label><i class="fas fa-file-alt"></i> Project Details *</label>
                         <textarea name="message" required placeholder="Describe your security needs, timeline, or specific requirements..."></textarea>
                     </div>
-                    <input type="hidden" name="_subject" value="🔐 New Cyber Security Inquiry from Portfolio">
-                    <input type="hidden" name="_next" value="https://formspree.io/thank-you">
+                    
+                    <!-- Formspree settings -->
+                    <input type="hidden" name="_subject" value="🔐 New Cyber Security Inquiry from Amal's Portfolio">
+                    <!-- Redirect to a thank you page in the same repository (create thank-you.html) -->
+                    <input type="hidden" name="_next" value="https://CipherNexus-ops.github.io/thank-you.html">
+                    
                     <button type="submit" class="neon-btn submit-btn"><i class="fas fa-paper-plane"></i> Send Encrypted Inquiry</button>
                 </form>
             </div>
@@ -139,14 +146,13 @@
         
         <footer>
             <p id="footerText"></p>
-            <div class="social-links" id="footerSocial">
-                <!-- Populated by JS -->
-            </div>
+            <div class="social-links" id="footerSocial"></div>
         </footer>
     </div>
 
-    <!-- Main JS -->
+    <!-- Main JS module -->
     <script type="module" src="script.js"></script>
+    <!-- Fallback for older browsers -->
     <script nomodule src="fallback.js"></script>
 </body>
 </html>
