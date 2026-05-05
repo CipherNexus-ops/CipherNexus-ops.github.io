@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Amal Chand | Cyber Security Professional</title>
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Main CSS (stored in separate file) -->
-    <link rel="stylesheet" href="style.css">
     <!-- Three.js -->
     <script type="importmap">
         {
@@ -18,12 +16,524 @@
             }
         }
     </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: #eef5ff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101018;
+            border-left: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #0ff, #f0f);
+            border-radius: 10px;
+        }
+
+        .glass-panel {
+            background: rgba(12, 15, 25, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 10px rgba(0,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(0, 255, 255, 0.6);
+            box-shadow: 0 0 22px rgba(0, 255, 255, 0.3);
+        }
+
+        .neon-btn {
+            background: rgba(0, 20, 30, 0.7);
+            border: 1.5px solid #0ff;
+            color: #0ff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .neon-btn:hover {
+            background: #0ff22a20;
+            box-shadow: 0 0 18px #0ff, 0 0 8px #0ff inset;
+            color: #ffffff;
+            text-shadow: 0 0 3px cyan;
+            transform: translateY(-2px);
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            display: block;
+        }
+
+        .ambient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(5, 5, 20, 0.7), rgba(0,0,0,0.85));
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 65%;
+            height: 3px;
+            background: linear-gradient(90deg, #0ff, #f0f);
+            border-radius: 3px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        header {
+            padding: 24px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #aaffff, #ff66ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .logo i {
+            color: #0ff;
+            margin-right: 6px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: #ccf5ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        nav ul li a:hover {
+            color: #0ff;
+            text-shadow: 0 0 5px cyan;
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            color: #0ff;
+            border-left: 4px solid #0ff;
+            padding-left: 15px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin: 20px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #0ff, #f5f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .typewriter {
+            font-size: 1.3rem;
+            border-right: 2px solid cyan;
+            white-space: nowrap;
+            overflow: hidden;
+            width: fit-content;
+            animation: blinkCursor 0.8s step-end infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { border-color: cyan; }
+            50% { border-color: transparent; }
+        }
+
+        .skills-grid, .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .skill-card, .project-card {
+            background: rgba(8, 12, 22, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 28px 20px;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .skill-card:hover, .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #0ff;
+            box-shadow: 0 18px 35px -12px rgba(0,255,255,0.2);
+        }
+
+        .skill-icon {
+            font-size: 2.8rem;
+            color: #0ff;
+            margin-bottom: 18px;
+        }
+
+        .project-card h3 {
+            margin: 12px 0;
+            font-size: 1.6rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            margin-right: 8px;
+            margin-top: 12px;
+            color: #aaf;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            color: #0ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .github-link:hover {
+            text-shadow: 0 0 5px cyan;
+            gap: 12px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin: 30px 0 20px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(0,255,255,0.2);
+            border-bottom: 1px solid rgba(0,255,255,0.2);
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 160px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+        }
+
+        .info-item i {
+            font-size: 1.6rem;
+            color: #0ff;
+            width: 32px;
+        }
+
+        .form-section {
+            margin: 60px 0 40px;
+        }
+
+        .inquiry-form {
+            padding: 35px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ccf5ff;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #0ff;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 20, 30, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 16px;
+            color: #fff;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #0ff;
+            box-shadow: 0 0 12px rgba(0,255,255,0.3);
+            background: rgba(0, 30, 40, 0.8);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #0ff22a30, #0ff);
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(0,255,255,0.2);
+            margin-top: 40px;
+        }
+
+        .social-links a {
+            color: #bbf;
+            margin: 0 12px;
+            font-size: 1.6rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: #0ff;
+            text-shadow: 0 0 6px cyan;
+            transform: translateY(-3px);
+        }
+
+        .side-skill-badge {
+            background: rgba(255, 0, 255, 0.1);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-top: 8px;
+            color: #f0f;
+        }
+
+        .shape-tag {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            color: #0ff;
+            font-family: monospace;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 30px 0 20px;
+        }
+
+        /* Thank You Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        .thankyou-popup {
+            background: rgba(10, 20, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid #0ff;
+            border-radius: 32px;
+            padding: 40px 50px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(0, 255, 255, 0.3);
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .thankyou-popup i {
+            font-size: 64px;
+            color: #0f0;
+            margin-bottom: 20px;
+        }
+
+        .thankyou-popup h2 {
+            color: #0ff;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .thankyou-popup p {
+            color: #ccf5ff;
+            margin: 15px 0;
+        }
+
+        .popup-close {
+            background: transparent;
+            border: 1.5px solid #0ff;
+            color: #0ff;
+            padding: 10px 30px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .popup-close:hover {
+            background: #0ff22a20;
+            box-shadow: 0 0 15px #0ff;
+        }
+
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2.6rem; }
+            .section-title { font-size: 2rem; }
+            .typewriter { font-size: 1rem; white-space: normal; border-right: none; }
+            nav ul { gap: 18px; }
+            .info-grid { flex-direction: column; gap: 15px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+        }
+    </style>
 </head>
 <body>
 
     <canvas id="bg-canvas"></canvas>
     <div class="ambient-overlay"></div>
-    <div class="shape-tag" id="shapeTag">🌀 LOADING...</div>
+    <div class="shape-tag" id="shapeTag">🌀 LOADING SHAPE...</div>
+
+    <!-- Thank You Popup -->
+    <div id="thankyouPopup" class="popup-overlay">
+        <div class="thankyou-popup">
+            <i class="fas fa-check-circle"></i>
+            <h2>✓ MESSAGE RECEIVED</h2>
+            <p>Your encrypted inquiry has been delivered.<br><strong>I'll respond within 24 hours.</strong></p>
+            <button class="popup-close" onclick="closePopup()">⟫ CLOSE ⟪</button>
+        </div>
+    </div>
 
     <div class="container">
         <header>
@@ -43,15 +553,17 @@
 
         <section id="home" class="hero">
             <div class="hero-content">
-                <div class="hero-badge"><i class="fas fa-shield-haltered"></i> <span id="heroBadge">ETHICAL HACKER / MALWARE RESEARCHER</span></div>
+                <div class="hero-badge"><i class="fas fa-shield-haltered"></i> ETHICAL HACKER / MALWARE RESEARCHER</div>
                 <h1>Break. <span class="highlight">Protect.</span><br> Repeat.</h1>
-                <div class="typewriter" id="typewriter-text">$> loading...</div>
+                <div class="typewriter" id="typewriter-text">$> python malware · network pentesting · bash automation</div>
                 <div class="btn-group">
                     <button class="neon-btn" id="contactBtn"><i class="fas fa-terminal"></i> ENCRYPTED CONTACT</button>
                     <button class="neon-btn" id="resumeBtn"><i class="fas fa-download"></i> DOWNLOAD RESUME</button>
                 </div>
-                <div class="social-links" id="socialLinks">
-                    <!-- JS will fill -->
+                <div class="social-links">
+                    <a href="https://github.com/CipherNexus-ops" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/amal-chand" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:amal51925192@gmail.com"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
             <div style="flex:0.4; min-width: 180px; text-align:center;" class="glass-panel" style="padding:20px;">
@@ -62,26 +574,51 @@
 
         <section id="skills">
             <h2 class="section-title"><i class="fas fa-microchip"></i> Core Arsenal</h2>
-            <div class="skills-grid" id="skillsGrid">
-                <!-- JS will fill -->
+            <div class="skills-grid">
+                <div class="skill-card"><div class="skill-icon"><i class="fab fa-python"></i></div><h3>Python Malware Development</h3><p>Educational RATs, crypters, keyloggers, AV evasion, and custom C2 simulations.</p><div class="tag">Python</div><div class="tag">C2</div></div>
+                <div class="skill-card"><div class="skill-icon"><i class="fas fa-network-wired"></i></div><h3>Network Pentesting</h3><p>Deep packet analysis, port scanning, MITM attacks, firewall evasion.</p><div class="tag">TCP/IP</div><div class="tag">Wireshark</div></div>
+                <div class="skill-card"><div class="skill-icon"><i class="fas fa-terminal"></i></div><h3>Bash Scripting & Automation</h3><p>Custom automation for recon, log analysis, privilege escalation.</p><div class="tag">Bash</div><div class="tag">Linux</div></div>
+                <div class="skill-card"><div class="skill-icon"><i class="fas fa-shield-haltered"></i></div><h3>Offensive Security</h3><p>Web app testing, privilege escalation, reverse engineering.</p><div class="tag">Kali Linux</div><div class="tag">Red Teaming</div>
+                <div class="side-skill-badge"><i class="fas fa-microchip"></i> + ESP32 / Arduino (side interest)</div>
+                </div>
             </div>
         </section>
 
         <section id="projects">
             <h2 class="section-title"><i class="fab fa-github"></i> Active Projects</h2>
-            <div class="projects-grid" id="projectsGrid">
-                <!-- JS will fill -->
+            <div class="projects-grid">
+                <div class="project-card">
+                    <i class="fab fa-python" style="font-size: 2.2rem; color:#0ff;"></i>
+                    <h3>Python Remote Shell</h3>
+                    <p>Educational remote command execution using Python sockets. Network discovery via MAC address.</p>
+                    <div class="tag">Python</div>
+                    <div class="tag">Sockets</div>
+                    <a href="https://github.com/CipherNexus-ops/python-remote-shell-demo" target="_blank" class="github-link"><i class="fab fa-github"></i> View Repository →</a>
+                </div>
+                <div class="project-card">
+                    <i class="fas fa-lock" style="font-size: 2.2rem; color:#f0f;"></i>
+                    <h3>Password Strength Checker</h3>
+                    <p>Analyzes password strength, pattern detection, security scoring using regex.</p>
+                    <div class="tag">Python</div>
+                    <div class="tag">Regex</div>
+                    <a href="https://github.com/CipherNexus-ops/Password-checker" target="_blank" class="github-link"><i class="fab fa-github"></i> View Repository →</a>
+                </div>
+                <div class="project-card">
+                    <i class="fas fa-terminal" style="font-size: 2.2rem; color:#0ff;"></i>
+                    <h3>NetRecon Suite</h3>
+                    <p>Bash + Python hybrid for automated network recon and log parsing.</p>
+                    <div class="tag">Bash</div>
+                    <div class="tag">Python</div>
+                    <span class="github-link" style="cursor:default;"><i class="fas fa-cogs"></i> Private / Upcoming</span>
+                </div>
             </div>
         </section>
 
-        <!-- ============================================= -->
-        <!-- WORKING INQUIRY FORM - REDIRECT METHOD (NO CORS) -->
-        <!-- ============================================= -->
+        <!-- Inquiry Form -->
         <section id="inquiry" class="form-section">
             <h2 class="section-title"><i class="fas fa-envelope"></i> Secure Inquiry</h2>
             <div class="glass-panel inquiry-form">
-                <!-- Direct Formspree submission - redirects to thank you page, bypasses CORS -->
-                <form action="https://formspree.io/f/xkoyjqwv" method="POST">
+                <form id="contactForm">
                     <div class="form-row">
                         <div class="form-group">
                             <label><i class="fas fa-user"></i> Full Name *</label>
@@ -124,13 +661,7 @@
                         <label><i class="fas fa-file-alt"></i> Project Details *</label>
                         <textarea name="message" required placeholder="Describe your security needs, timeline, or specific requirements..."></textarea>
                     </div>
-                    
-                    <!-- Formspree settings -->
-                    <input type="hidden" name="_subject" value="🔐 New Cyber Security Inquiry from Amal's Portfolio">
-                    <!-- Redirect to a thank you page in the same repository (create thank-you.html) -->
-                    <input type="hidden" name="_next" value="https://CipherNexus-ops.github.io/thank-you.html">
-                    
-                    <button type="submit" class="neon-btn submit-btn"><i class="fas fa-paper-plane"></i> Send Encrypted Inquiry</button>
+                    <button type="submit" class="neon-btn submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Send Encrypted Inquiry</button>
                 </form>
             </div>
         </section>
@@ -138,21 +669,219 @@
         <section id="about">
             <div class="glass-panel" style="padding: 40px;">
                 <h2 style="color: #0ff; margin-bottom: 20px;"><i class="fas fa-user-secret"></i> // CYBER MANIFESTO</h2>
-                <div class="about-text" id="aboutText"></div>
-                <div class="info-grid" id="infoGrid"></div>
-                <div style="font-family: monospace; border-left: 2px solid cyan; padding-left: 18px; margin-top: 20px;" id="quoteBox"></div>
+                <div class="about-text">
+                    I'm <span class="highlight">Amal Chand P K</span> — a cyber security professional driven by curiosity. <strong>"break to protect"</strong>. I build tools to understand attacker psychology.
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span><strong>📍 Location</strong><br>Kerala, India</span></div>
+                    <div class="info-item"><i class="fas fa-laptop-code"></i> <span><strong>⚡ Core Focus</strong><br>Python Malware · Network Pentesting · Bash</span></div>
+                    <div class="info-item"><i class="fas fa-brain"></i> <span><strong>🧠 Beyond Tech</strong><br>Hardware tinkering (ESP32 side passion)</span></div>
+                </div>
+                <div style="font-family: monospace; border-left: 2px solid cyan; padding-left: 18px; margin-top: 20px;">
+                    <i class="fas fa-quote-left" style="color:#0ff;"></i> "Hack with intent. Protect with precision."<br>
+                    >_ current focus: advanced network evasions & python malware frameworks.
+                </div>
             </div>
         </section>
         
         <footer>
-            <p id="footerText"></p>
-            <div class="social-links" id="footerSocial"></div>
+            <p><i class="fas fa-shield-haltered"></i> Amal Chand | Kerala, IN — Ethical research only. All tools are for learning in controlled environments.</p>
+            <div class="social-links" style="margin-top: 16px;">
+                <a href="https://github.com/CipherNexus-ops" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/amal-chand" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:amal51925192@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
         </footer>
     </div>
 
-    <!-- Main JS module -->
-    <script type="module" src="script.js"></script>
-    <!-- Fallback for older browsers -->
-    <script nomodule src="fallback.js"></script>
+    <script type="module">
+        import * as THREE from 'three';
+        
+        // Random geometric shape
+        const shapeTypes = [
+            { name: "⚡ TORUS KNOT", create: () => new THREE.TorusKnotGeometry(1.2, 0.32, 180, 24, 3, 4), color: 0x0ff0ff, emissive: 0x004444 },
+            { name: "🌀 ICOSAHEDRON", create: () => new THREE.IcosahedronGeometry(1.3, 0), color: 0xff44aa, emissive: 0x331133 },
+            { name: "🔮 DODECAHEDRON", create: () => new THREE.DodecahedronGeometry(1.1, 0), color: 0x44ffaa, emissive: 0x114422 },
+            { name: "💠 OCTAHEDRON", create: () => new THREE.OctahedronGeometry(1.4, 0), color: 0xffaa44, emissive: 0x442200 },
+            { name: "🔷 TETRAHEDRON", create: () => new THREE.TetrahedronGeometry(1.4, 0), color: 0xaa66ff, emissive: 0x220044 },
+            { name: "⚙️ RING TORUS", create: () => new THREE.TorusGeometry(1.1, 0.28, 64, 128), color: 0xff66cc, emissive: 0x331122 }
+        ];
+        const randomIndex = Math.floor(Math.random() * shapeTypes.length);
+        const selected = shapeTypes[randomIndex];
+        document.getElementById('shapeTag').innerHTML = `${selected.name} • REFRESH FOR NEW`;
+        
+        const canvas = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050510);
+        scene.fog = new THREE.FogExp2(0x050510, 0.008);
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 12);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        const ambientLight = new THREE.AmbientLight(0x111122);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0x00aaff, 0.8);
+        pointLight.position.set(3, 5, 4);
+        scene.add(pointLight);
+        const backLight = new THREE.PointLight(0xff44ff, 0.5);
+        backLight.position.set(-2, 1, -5);
+        scene.add(backLight);
+        
+        const geom = selected.create();
+        const mat = new THREE.MeshStandardMaterial({ color: selected.color, emissive: selected.emissive, roughness: 0.3, metalness: 0.7 });
+        const primaryMesh = new THREE.Mesh(geom, mat);
+        scene.add(primaryMesh);
+        
+        const wireframeGeo = new THREE.IcosahedronGeometry(1.9, 0);
+        const wireMat = new THREE.MeshBasicMaterial({ color: 0x00ccff, wireframe: true, transparent: true, opacity: 0.2 });
+        const wireSphere = new THREE.Mesh(wireframeGeo, wireMat);
+        scene.add(wireSphere);
+        
+        const particlesCount = 1400;
+        const positions = new Float32Array(particlesCount * 3);
+        for (let i = 0; i < particlesCount; i++) {
+            positions[i*3] = (Math.random() - 0.5) * 200;
+            positions[i*3+1] = (Math.random() - 0.5) * 100;
+            positions[i*3+2] = (Math.random() - 0.5) * 80 - 40;
+        }
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particlesMesh = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: 0x44aaff, size: 0.1, blending: THREE.AdditiveBlending }));
+        scene.add(particlesMesh);
+        
+        const gridHelper = new THREE.GridHelper(30, 40, 0x0ff, 0x3366aa);
+        gridHelper.position.y = -2.5;
+        gridHelper.material.opacity = 0.35;
+        scene.add(gridHelper);
+        
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.008;
+            primaryMesh.rotation.x = time * 0.5;
+            primaryMesh.rotation.y = time * 0.7;
+            wireSphere.rotation.x = time * 0.2;
+            wireSphere.rotation.y = time * 0.3;
+            particlesMesh.rotation.y = time * 0.02;
+            camera.position.x += (0 - camera.position.x) * 0.03;
+            camera.lookAt(0, 0.5, 0);
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+    
+    <script>
+        // Typewriter effect
+        const texts = ["$> python malware · network pentesting", "$> break to protect | ethical research", "$> bash automation · red team mindset", "$> github.com/ciphernexus-ops"];
+        let idx = 0, charIdx = 0;
+        const typeEl = document.getElementById('typewriter-text');
+        function typeWriter() {
+            if (!typeEl) return;
+            if (charIdx < texts[idx].length) {
+                typeEl.innerHTML = texts[idx].substring(0, charIdx + 1) + '<span style="opacity:0.7;">_</span>';
+                charIdx++;
+                setTimeout(typeWriter, 70);
+            } else {
+                setTimeout(() => {
+                    idx = (idx + 1) % texts.length;
+                    charIdx = 0;
+                    typeWriter();
+                }, 2500);
+            }
+        }
+        typeWriter();
+        
+        // Popup functions
+        function showPopup() {
+            document.getElementById('thankyouPopup').classList.add('active');
+        }
+        window.closePopup = function() {
+            document.getElementById('thankyouPopup').classList.remove('active');
+        };
+        
+        // Form submission
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                const formData = new FormData(form);
+                formData.append('_subject', '🔐 New Inquiry from Amal Portfolio');
+                formData.append('_next', 'https://formspree.io/thank-you');
+                
+                try {
+                    const response = await fetch('https://formspree.io/f/xkoyjqwv', {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    
+                    if (response.ok) {
+                        form.reset();
+                        showPopup();
+                    } else {
+                        alert('❌ Error sending. Please email me directly: amal51925192@gmail.com');
+                    }
+                } catch (error) {
+                    alert('❌ Network error. Please email me directly: amal51925192@gmail.com');
+                } finally {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+        
+        // Contact button
+        document.getElementById('contactBtn')?.addEventListener('click', () => {
+            alert("[🔐 ENCRYPTED]\n📧 amal51925192@gmail.com\n💼 linkedin.com/in/amal-chand\n🐙 github.com/CipherNexus-ops");
+        });
+        
+        // Resume button
+        document.getElementById('resumeBtn')?.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = 'cv.pdf';
+            a.download = 'Amal_Chand_CV.pdf';
+            a.click();
+            setTimeout(() => alert("If PDF not found, email me directly for resume."), 500);
+        });
+        
+        // Card hover effects
+        const cards = document.querySelectorAll('.skill-card, .project-card');
+        document.addEventListener('mousemove', (e) => {
+            const mx = e.clientX / window.innerWidth;
+            const my = e.clientY / window.innerHeight;
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const dx = (mx - (rect.left + rect.width/2) / window.innerWidth) * 10;
+                const dy = (my - (rect.top + rect.height/2) / window.innerHeight) * 8;
+                card.style.transform = `perspective(800px) rotateX(${dy * -0.5}deg) rotateY(${dx * 0.5}deg) translateY(-4px)`;
+            });
+        });
+        cards.forEach(card => card.addEventListener('mouseleave', () => card.style.transform = ''));
+        
+        // Glitch effect
+        const glitchElements = document.querySelectorAll('h1, .section-title, .logo');
+        setInterval(() => {
+            if (Math.random() > 0.85) {
+                glitchElements.forEach(el => {
+                    el.style.textShadow = '2px 0 cyan, -2px 0 magenta';
+                    setTimeout(() => el.style.textShadow = '', 120);
+                });
+            }
+        }, 3000);
+    </script>
 </body>
 </html>
